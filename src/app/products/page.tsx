@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import {products} from "@/app/lib/constants";
 
 export interface ProductInterface {
     id: number;
@@ -12,9 +12,11 @@ export interface ProductInterface {
 export const revalidate = 60; // Regenerate the page every 60 seconds
 
 export default async function ProductsPage() {
-    const file = await fs.readFile(process.cwd() + '/data/products.json', 'utf8');
+    // const file = await fs.readFile(process.cwd() + '/data/products.json', 'utf8');
 
-    const products: ProductInterface[] = JSON.parse(file);
+    // const products: ProductInterface[] = JSON.parse(file);
+
+
 
     return (
         <div>
