@@ -1,5 +1,5 @@
 import React from 'react';
-import StoreProvider from "@/app/StoreProvider";
+import StoreProvider from "@/app/components/StoreProvider";
 
 const AdminLayout = ({
                          children,

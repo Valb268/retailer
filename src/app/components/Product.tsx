@@ -17,7 +17,6 @@ const Product = ({imageUrl, name, description, price}: Props) => {
                     src={imageUrl}
                     alt={name}
                     className=""
-                    // layout="fill"
                     fill={true}
                     draggable={true}
                     object-fit='cover'

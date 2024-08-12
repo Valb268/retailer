@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ProductInterface} from "@/app/components/catalog";
+import {ProductInterface} from "@/app/Catalog";
 import {toast} from "react-toastify";
 
 export const fetchProductsThunk = createAsyncThunk<ProductInterface[] | undefined, void>(
@@ -8,7 +8,7 @@ export const fetchProductsThunk = createAsyncThunk<ProductInterface[] | undefine
         try {
             const response = await fetch(`api/getproducts`);
             if (!response.ok) {
-                throw new Error('Failed to fetch products');
+                return rejectWithValue('Failed to fetch products');
             }
             const data: ProductInterface[] = await response.json();
             return data;

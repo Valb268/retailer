@@ -1,11 +1,11 @@
 'use client'
 import React, {useEffect, useState} from 'react';
 import {imageTemplate} from "@/app/lib/constants";
-import Product from "@/app/components/product";
-import {ProductInterface} from "@/app/components/catalog";
-import PencilIcon from "@/app/components/PencilIcon";
-import Trash from "@/app/components/Trash";
-import EditWindow from "@/app/components/EditWindow";
+import Product from "@/app/components/Product";
+import {ProductInterface} from "@/app/Catalog";
+import PencilIcon from "@/app/admin/PencilIcon";
+import Trash from "@/app/admin/Trash";
+import EditWindow from "@/app/admin/EditWindow";
 import {toast} from "react-toastify";
 import {useAppDispatch, useAppSelector} from "@/app/lib/hooks";
 import {fetchProductsThunk} from "@/app/lib/features/productsActions";
@@ -68,6 +68,7 @@ export default function AdminDashboard() {
                 newProducts[destinationProductIndex] = currentProducts[sourceProductIndex];
                 setCurrentProducts(newProducts);
                 setProductsChanged(true);
+                toast('Products switched successfully');
             }
         }
     }
@@ -99,11 +100,11 @@ export default function AdminDashboard() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(product),
-                    cache: 'no-cache'
                 })
                 if (response.ok) {
                     setCurrentProducts([...newProducts, product]);
                     setProductsChanged(true);
+                    toast("New product added");
                 }
             } else {
                 const response = await fetch('api/update', {
@@ -112,12 +113,13 @@ export default function AdminDashboard() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(product),
-                    cache: 'no-cache'
+                    // cache: 'no-cache'
                 })
                 if (response.ok) {
                     newProducts[index] = product;
                     setCurrentProducts(newProducts);
                     setProductsChanged(true);
+                    toast('Product updated');
                 }
             }
         }

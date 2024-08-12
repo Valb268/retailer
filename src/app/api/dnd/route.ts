@@ -26,7 +26,6 @@ export async function POST(req: Request) {
         return NextResponse.json(rows[0], {
             status: 201, headers: {
                 'Content-Type': 'application/json',
-                'Cache-Control': 'no-store'
             },
         });
 

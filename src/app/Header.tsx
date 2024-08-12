@@ -1,7 +1,6 @@
 import Link from "next/link";
 import React from "react";
 import DropdownButton from "@/app/components/DropDownButton";
-import AdminLink from "@/app/components/AdminLink";
 
 const Header = () => {
     return (
@@ -17,7 +16,7 @@ const Header = () => {
                         <div className="ml-2 md:ml-4 flex ">
                             <Link href={'/'}>
                                 <p style={{color: 'darkred'}}
-                                className="text-base md:text-xl"
+                                   className="text-base md:text-xl"
                                 >TheBestOnlineShop</p></Link>
                         </div>
 
@@ -34,27 +33,28 @@ const Header = () => {
                                     </div>
                                 </div>
 
-                                <a href="#"
+                                <a href="components#"
                                    className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Company</a>
-                                <a href="#"
+                                <a href="components#"
                                    className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Stores</a>
                             </div>
                         </div>
 
                         <div className="ml-auto flex items-center">
                             <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
+                                <a href="components#" className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign
                                     in</a>
                                 <span className="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-                                <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">Create
+                                <a href="components#" className="text-sm font-medium text-gray-700 hover:text-gray-800">Create
                                     account</a>
                                 <span className="h-6 w-px bg-gray-200" aria-hidden="true"></span>
-                                <AdminLink/>
+                                <Link href={'admin'} className="text-sm font-medium text-gray-700 hover:text-gray-800">Admin
+                                    Dashboard</Link>
                             </div>
 
                             {/*<-- Search -->*/}
                             <div className="flex lg:ml-6">
-                                <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
+                                <a href="components#" className="p-2 text-gray-400 hover:text-gray-500">
                                     <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
                                          stroke="currentColor" aria-hidden="true">
                                         <path strokeLinecap="round" strokeLinejoin="round"
@@ -65,7 +65,7 @@ const Header = () => {
 
                             {/*<-- Cart -->*/}
                             <div className="ml-4 flow-root lg:ml-6">
-                                <a href="#" className="group -m-2 flex items-center p-2">
+                                <a href="components#" className="group -m-2 flex items-center p-2">
                                     <svg className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                                          fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
                                          aria-hidden="true">

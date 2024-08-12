@@ -1,5 +1,5 @@
 import React from 'react';
-import Product from "@/app/components/product";
+import Product from "@/app/components/Product";
 import {getProducts} from "@/app/lib/utils";
 
 

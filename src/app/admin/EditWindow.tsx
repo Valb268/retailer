@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useCallback, useState} from "react";
-import {ProductInterface} from "@/app/components/catalog";
+import {ProductInterface} from "@/app/Catalog";
 import {toast} from "react-toastify";
 import Image from 'next/image';
 
@@ -46,15 +46,7 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
                     if (response.ok) {
                         const {url} = await response.json();
                         setImage(url);
-                        toast(
-                            (t) => (
-                                <div className="relative">
-                                    <div className="p-2">
-                                        <p className="font-semibold text-gray-900">File uploaded!</p>
-                                    </div>
-                                </div>
-                            )
-                        );
+                        toast('File uploaded');
                     } else {
                         toast('Upload failed');
                     }

@@ -1,4 +1,4 @@
-import Catalog from "@/app/components/catalog";
+import Catalog from "@/app/Catalog";
 
 
 export const revalidate = 60; // Regenerate the page every 60 seconds
