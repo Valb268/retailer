@@ -1,5 +1,9 @@
-import React, {useState} from "react";
-import {ProductInterface} from "@/app/products/page";
+'use client'
+
+import React, {useCallback, useState} from "react";
+import {ProductInterface} from "@/app/components/catalog";
+import {toast} from "react-toastify";
+import Image from 'next/image';
 
 type Props = {
     isOpen: boolean,
@@ -14,26 +18,62 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
     const [description, setDescription] = useState(product.description);
     const [image, setImage] = useState(product.image);
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // TODO
 
         handleSave({
             id: product.id,
             name: title,
             price,
             image,
-            description
+            description,
+            order: 0
         });
         handleClose();
     }
 
-    function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.files && e.target.files.length > 0) {
-            const file = e.target.files[0];
-            // TODO uploading
+    const handleFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        const uploadFile = async (uploadedFile: File) => {
+            if (uploadedFile) {
+                try {
+                    const response = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: {'content-type': uploadedFile.type},
+                        body: uploadedFile,
+                    });
+
+                    if (response.ok) {
+                        const {url} = await response.json();
+                        setImage(url);
+                        toast(
+                            (t) => (
+                                <div className="relative">
+                                    <div className="p-2">
+                                        <p className="font-semibold text-gray-900">File uploaded!</p>
+                                    </div>
+                                </div>
+                            )
+                        );
+                    } else {
+                        toast('Upload failed');
+                    }
+                } catch (error) {
+                    toast('An error occurred during upload');
+                }
+            }
         }
-    }
+
+        if (e.target.files && e.target.files.length > 0) {
+            const uploadedFile = e.target.files[0];
+            if ( uploadedFile.size / 1024 / 1024 > 4.5) {
+                toast('File too large (max 4.5MB)');
+            } else {
+                await uploadFile(uploadedFile);
+            }
+        }
+
+    }, []);
 
 
     return (
@@ -149,17 +189,32 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
                                                 <div
                                                     className="mt-1 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-4 py-5">
                                                     <div className="text-center">
-                                                        <svg className="mx-auto h-12 w-12 text-gray-300"
-                                                             viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                        {image && (
+                                                            <div
+                                                                className='aspect-w-9 aspect-h-10 rounded-md'
+                                                            ><Image
+                                                                key={image}
+                                                                src={image}
+                                                                alt="image"
+                                                                layout='fill'
+                                                                objectFit='cover'
+                                                                className=""
+                                                            /></div>
+                                                        )}
+
+                                                        {!image && <svg className="mx-auto h-12 w-12 text-gray-300"
+                                                                        viewBox="0 0 24 24" fill="currentColor"
+                                                                        aria-hidden="true">
                                                             <path fillRule="evenodd"
                                                                   d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z"
                                                                   clipRule="evenodd"/>
-                                                        </svg>
+                                                        </svg>}
                                                         <div className="mt-4 flex text-sm leading-6 text-gray-600">
                                                             <label htmlFor="file-upload"
                                                                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                                                                 <span>Upload a file</span>
                                                                 <input id="file-upload" name="file-upload" type="file"
+                                                                       accept="image/*"
                                                                        className="sr-only"
                                                                        onChange={handleFileUpload}
                                                                 />
@@ -167,7 +222,7 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
                                                             <p className="pl-1">or drag and drop</p>
                                                         </div>
                                                         <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up
-                                                            to 10MB</p>
+                                                            to 4.5MB</p>
                                                     </div>
                                                 </div>
                                             </div>

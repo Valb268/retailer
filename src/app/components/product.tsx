@@ -1,28 +1,29 @@
 import Image from "next/image";
 import React from "react";
-import clsx from "clsx";
 
 type Props = {
     imageUrl: string,
     name: string,
     description: string,
     price: string,
-    cursorGrab?: boolean
 }
 
-const Product = ({imageUrl, name, description, price, cursorGrab}: Props) => {
+const Product = ({imageUrl, name, description, price}: Props) => {
     return (
         <div className="group relative w-[150px] lg:w-[200px] 2xl:w-[300px]">
             <div
-                // style={{width: '250px'}}
-                className={clsx(" aspect-w-9 aspect-h-10 overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75", {"hover:cursor-pointer" : cursorGrab})}>
+                className="aspect-w-9 aspect-h-10 overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
                 <Image
                     src={imageUrl}
                     alt={name}
                     className=""
-                    layout="fill"
+                    // layout="fill"
+                    fill={true}
                     draggable={true}
-                    objectFit='cover'
+                    object-fit='cover'
+                    sizes="10vw"
+                    // width={120}
+                    // height={150}
 
                 />
             </div>

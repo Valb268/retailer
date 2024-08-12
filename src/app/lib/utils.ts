@@ -1,4 +1,6 @@
-import {ProductInterface} from "@/app/products/page";
+import {ProductInterface} from "@/app/components/catalog";
+import {toast} from "react-toastify";
+import {sql} from "@vercel/postgres";
 
 export const generateProductId = (products: ProductInterface[]): number => {
     let id = Math.trunc(Math.random() * 10000000);
@@ -8,3 +10,26 @@ export const generateProductId = (products: ProductInterface[]): number => {
     }
     return id;
 }
+
+export const getProducts = async () => {
+    try {
+        const res = await sql`SELECT * FROM products ORDER BY "order"`;
+        if (res) {
+            const products: ProductInterface[] = res.rows.map(row => ({
+                id: row.id,
+                name: row.name,
+                price: row.price,
+                description: row.description,
+                image: row.image,
+                order: row.order
+            }));
+            return products;
+        } else {
+            toast("Failed to fetch products");
+        }
+    } catch (error) {
+        toast(error instanceof Error ? error.message : 'An error occurred');
+    }
+};
+
+
