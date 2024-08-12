@@ -54,7 +54,6 @@ export default function AdminDashboard() {
             const destinationProductIndex = currentProducts.findIndex(p => p.id === product.id);
             const destinationProductOrder = currentProducts[destinationProductIndex].order;
 
-
             const response = await fetch('/api/dnd', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -172,7 +171,7 @@ export default function AdminDashboard() {
                     <div
                     >
                         <button
-                            className="rounded-md mr-5 bg-indigo-600 px-3 py-2 my-1 lg:my-0 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            className="rounded-md bg-indigo-600 px-3 py-2 my-1 lg:my-0 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             onClick={addNewProduct}
                         >Add new product
                         </button>
@@ -182,7 +181,7 @@ export default function AdminDashboard() {
                 </div>
             </header>
             <div
-                className="mx-auto m-6 flex flex-wrap gap-4 sm:gap-6 md:gap-9 lg:gap-11 xl:gap-13 min-h-[600px] max-w-[1280px]">
+                className="mx-auto my-6 flex px-4 py-6 sm:px-6 lg:px-8 flex-wrap gap-4 sm:gap-6 md:gap-9 lg:gap-11 xl:gap-13 min-h-[600px] max-w-7xl">
                 {currentProducts && currentProducts.map(product => <div
                     key={product.id}
                     style={{padding: '0 10px', position: 'relative'}}

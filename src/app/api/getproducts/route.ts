@@ -1,6 +1,8 @@
 import {sql} from "@vercel/postgres";
+import {unstable_noStore as noStore} from "next/cache";
 
 export async function GET() {
+    noStore();
     try {
         const { rows } = await sql`SELECT * FROM products ORDER BY "order"`;
 

@@ -6,8 +6,7 @@ export const fetchProductsThunk = createAsyncThunk<ProductInterface[] | undefine
     'products/fetch',
     async (_, {rejectWithValue}) => {
         try {
-            const timestamp = Date.now();
-            const response = await fetch(`api/getproducts?timestamp=${timestamp}`);
+            const response = await fetch(`api/getproducts`);
             if (!response.ok) {
                 throw new Error('Failed to fetch products');
             }

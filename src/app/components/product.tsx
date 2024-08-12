@@ -10,7 +10,7 @@ type Props = {
 
 const Product = ({imageUrl, name, description, price}: Props) => {
     return (
-        <div className="group relative w-[150px] lg:w-[200px] 2xl:w-[300px]">
+        <div className="group relative w-[150px] lg:w-[200px] 2xl:w-[250px]">
             <div
                 className="aspect-w-9 aspect-h-10 overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75">
                 <Image
@@ -22,9 +22,7 @@ const Product = ({imageUrl, name, description, price}: Props) => {
                     draggable={true}
                     object-fit='cover'
                     sizes="10vw"
-                    // width={120}
-                    // height={150}
-
+                    priority={true}
                 />
             </div>
             <div className="mt-4 flex justify-between mb-5">
