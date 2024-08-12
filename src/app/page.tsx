@@ -12,7 +12,7 @@ export interface ProductInterface {
     order: number
 }
 
-// export const revalidate = 60;
+export const revalidate = 60;
 
 export default async function Page () {
 
