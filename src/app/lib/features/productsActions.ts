@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ProductInterface} from "@/app/Catalog";
+import {ProductInterface} from "@/app/page";
 import {toast} from "react-toastify";
 
 export const fetchProductsThunk = createAsyncThunk<ProductInterface[] | undefined, void>(

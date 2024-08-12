@@ -1,4 +1,4 @@
-import {ProductInterface} from "@/app/Catalog";
+import {ProductInterface} from "@/app/page";
 import {toast} from "react-toastify";
 import {sql} from "@vercel/postgres";
 

@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from 'react';
 import {imageTemplate} from "@/app/lib/constants";
 import Product from "@/app/components/Product";
-import {ProductInterface} from "@/app/Catalog";
+import {ProductInterface} from "@/app/page";
 import PencilIcon from "@/app/admin/PencilIcon";
 import Trash from "@/app/admin/Trash";
 import EditWindow from "@/app/admin/EditWindow";

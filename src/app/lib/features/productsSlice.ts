@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {ProductInterface} from "@/app/Catalog";
+import {ProductInterface} from "@/app/page";
 import {fetchProductsThunk} from "@/app/lib/features/productsActions";
 
 const productSlice = createSlice({

@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useCallback, useState} from "react";
-import {ProductInterface} from "@/app/Catalog";
+import {ProductInterface} from "@/app/page";
 import {toast} from "react-toastify";
 import Image from 'next/image';
 
