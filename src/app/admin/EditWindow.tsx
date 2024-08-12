@@ -4,6 +4,7 @@ import React, {useCallback, useState} from "react";
 import {ProductInterface} from "@/app/page";
 import {toast} from "react-toastify";
 import Image from 'next/image';
+import dayjs from "dayjs";
 
 type Props = {
     isOpen: boolean,
@@ -17,17 +18,21 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
     const [price, setPrice] = useState(product.price);
     const [description, setDescription] = useState(product.description);
     const [image, setImage] = useState(product.image);
+    const date = dayjs(product.publish_date);
+    const [publishDate, setPublishDate] = useState(date.format('YYYY-MM-DD'));
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        const date = dayjs(publishDate);
+        const dateForDB = date.format('YYYY-MM-DD HH:mm:ss');
         handleSave({
             id: product.id,
             name: title,
             price,
             image,
             description,
-            order: 0
+            order: 0,
+            publish_date: dateForDB
         });
         handleClose();
     }
@@ -58,7 +63,7 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
 
         if (e.target.files && e.target.files.length > 0) {
             const uploadedFile = e.target.files[0];
-            if ( uploadedFile.size / 1024 / 1024 > 4.5) {
+            if (uploadedFile.size / 1024 / 1024 > 4.5) {
                 toast('File too large (max 4.5MB)');
             } else {
                 await uploadFile(uploadedFile);
@@ -232,6 +237,24 @@ const EditWindow = ({isOpen, handleClose, product, handleSave}: Props) => {
                                                         />
                                                     </div>
                                                 </div>
+                                                <label htmlFor="publishDate"
+                                                       className="block text-sm font-medium leading-6 text-gray-900"
+                                                    >When to publish</label>
+
+                                                <div className="mt-2 mb-5">
+                                                    <div
+                                                        // className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+                                                    >
+
+                                                    <input
+                                                    type='date' name='publishDate' id="publishDate"
+                                                    className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md"
+                                                    value={publishDate}
+                                                    onChange={(e) => setPublishDate(e.target.value)}
+                                                />
+                                                    </div>
+                                                </div>
+
                                             </div>
 
 

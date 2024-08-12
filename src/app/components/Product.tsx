@@ -1,14 +1,19 @@
 import Image from "next/image";
 import React from "react";
+import dayjs from "dayjs";
 
 type Props = {
     imageUrl: string,
     name: string,
     description: string,
     price: string,
+    publishDate: string
 }
 
-const Product = ({imageUrl, name, description, price}: Props) => {
+const Product = ({imageUrl, name, description, price, publishDate}: Props) => {
+
+    const date = dayjs(publishDate);
+
     return (
         <div className="group relative w-[150px] lg:w-[200px] 2xl:w-[250px]">
             <div
@@ -23,7 +28,13 @@ const Product = ({imageUrl, name, description, price}: Props) => {
                     sizes="10vw"
                     priority={true}
                 />
+                {date > dayjs() && (
+                    <div className="absolute bottom-0 w-full bg-black bg-opacity-50 text-white text-center py-2">
+                        Not published yet
+                    </div>
+                )}
             </div>
+
             <div className="mt-4 flex justify-between mb-5">
                 <div>
                     <h3 className="text-sm text-gray-700">

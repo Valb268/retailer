@@ -8,7 +8,8 @@ import Trash from "@/app/admin/Trash";
 import EditWindow from "@/app/admin/EditWindow";
 import {toast} from "react-toastify";
 import {useAppDispatch, useAppSelector} from "@/app/lib/hooks";
-import {fetchProductsThunk} from "@/app/lib/features/productsActions";
+import {fetchProductsThunk, fetchUnpublishedThunk} from "@/app/lib/features/productsActions";
+import dayjs from "dayjs";
 
 export default function AdminDashboard() {
 
@@ -17,16 +18,21 @@ export default function AdminDashboard() {
     const [hoveredProductId, setHoveredProductId] = useState<number | null>(null);
     const [editProduct, setEditProduct] = useState<ProductInterface | null>(null);
     const [isProductsChanged, setProductsChanged] = useState(true);
+    const [isUnpublishedShown, setUnpublishedShown] = useState(false);
 
     const products = useAppSelector(state => state.products);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (isProductsChanged) {
-            dispatch(fetchProductsThunk());
+            if (isUnpublishedShown) {
+                dispatch(fetchUnpublishedThunk());
+            } else {
+                dispatch(fetchProductsThunk());
+            }
         }
         return () => setProductsChanged(false);
-    }, [dispatch, isProductsChanged]);
+    }, [dispatch, isProductsChanged, isUnpublishedShown]);
 
     useEffect(() => {
         if (products) {
@@ -88,6 +94,7 @@ export default function AdminDashboard() {
         if (!product.image) {
             product.image = imageTemplate;
         }
+
         if (currentProducts) {
             const index = currentProducts.findIndex(p => p.id === product.id);
             const newProducts = [...currentProducts];
@@ -113,7 +120,6 @@ export default function AdminDashboard() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(product),
-                    // cache: 'no-cache'
                 })
                 if (response.ok) {
                     newProducts[index] = product;
@@ -127,13 +133,15 @@ export default function AdminDashboard() {
 
     function addNewProduct() {
         if (currentProducts) {
+            const publishDate = dayjs().format('YYYY-MM-DD');
             const newProduct = {
                 id: 0,
                 name: '',
                 description: '',
                 price: '',
                 image: '',
-                order: 0
+                order: 0,
+                publish_date: publishDate
             }
             handleEdit(newProduct);
         }
@@ -147,7 +155,6 @@ export default function AdminDashboard() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                cache: 'no-cache'
             });
             if (response.ok) {
                 toast('Deleted successfully')
@@ -162,6 +169,11 @@ export default function AdminDashboard() {
 
     }
 
+    async function handleShowUnpublished() {
+        setUnpublishedShown((prevState) => !prevState);
+        setProductsChanged(true);
+    }
+
     return (
         <div>
             <header className="bg-white shadow">
@@ -170,8 +182,14 @@ export default function AdminDashboard() {
                         <h1 className="text-xl lg:text-3xl font-bold tracking-tight text-gray-900">Content Management
                             Dashboard</h1>
                     </div>
+
                     <div
-                    >
+                        className="flex flex-wrap gap-2 justify-center"
+                    ><button
+                        className="rounded-md bg-indigo-600 px-3 py-2 my-1 lg:my-0 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={handleShowUnpublished}
+                    >{isUnpublishedShown ? 'Hide unpublished products' : 'Show unpublished products'}
+                    </button>
                         <button
                             className="rounded-md bg-indigo-600 px-3 py-2 my-1 lg:my-0 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             onClick={addNewProduct}
@@ -202,6 +220,7 @@ export default function AdminDashboard() {
                         price={product.price}
                         description={product.description}
                         imageUrl={product.image}
+                        publishDate={product.publish_date}
                     />
                     {hoveredProductId === product.id && (
                         <div className="absolute top-0 right-3 flex space-x-2 p-2">

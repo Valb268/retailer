@@ -9,7 +9,8 @@ export interface ProductInterface {
     price: string;
     description: string;
     image: string;
-    order: number
+    order: number;
+    publish_date: string
 }
 
 export const revalidate = 60;
@@ -31,6 +32,7 @@ export default async function Page () {
                         price={product.price}
                         description={product.description}
                         imageUrl={product.image}
+                        publishDate={product.publish_date}
                     />)}
 
                 </div>

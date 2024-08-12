@@ -3,13 +3,14 @@ import {NextResponse} from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const {id, name, price, description, image} = await req.json();
+        const {id, name, price, description, image, publish_date} = await req.json();
         const {rows} = await sql`
             UPDATE products
             SET name = ${name},
                 price = ${price},
                 description = ${description},
-                image = ${image}
+                image = ${image},
+                publish_date = ${publish_date}
             WHERE id = ${id}
             RETURNING *;`
 

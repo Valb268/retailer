@@ -3,10 +3,10 @@ import {sql} from "@vercel/postgres";
 
 export async function POST(req: Request) {
     try {
-        const {name, price, description, image} = await req.json();
+        const {name, price, description, image, publish_date} = await req.json();
         const {rows} = await sql`
-            INSERT INTO products (name, price, description, image)
-            VALUES (${name}, ${price}, ${description}, ${image})
+            INSERT INTO products (name, price, description, image, publish_date)
+            VALUES (${name}, ${price}, ${description}, ${image}, ${publish_date})
             RETURNING *;
         `;
 
