@@ -24,6 +24,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  -webkit-touch-callout: none !important;
+  -webkit-user-select: none !important;
+  user-select: none;
 }
 
 @layer utilities {
