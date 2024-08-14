@@ -86,24 +86,6 @@ export default function AdminDashboard() {
         target.style.border = '1px solid darkred';
     }
 
-    function handleTouchStart(e: React.TouchEvent<HTMLDivElement>, product: ProductInterface) {
-        e.preventDefault();
-        const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
-        dragStartHandler(dragEvent, product);
-    }
-
-    function handleTouchMove(e: React.TouchEvent<HTMLDivElement>) {
-        e.preventDefault();
-        const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
-        dragOverHandler(dragEvent);
-    }
-
-    function handleTouchEnd(e: React.TouchEvent<HTMLDivElement>, product: ProductInterface) {
-        e.preventDefault();
-        const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
-        dropHandler(dragEvent, product);
-    }
-
     function handleEdit(product: ProductInterface | null) {
         setEditProduct(product);
     }
@@ -231,9 +213,6 @@ export default function AdminDashboard() {
                     onDrop={(e) => dropHandler(e, product)}
                     onMouseEnter={() => setHoveredProductId(product.id)}
                     onMouseLeave={() => setHoveredProductId(null)}
-                    onTouchStart={(e) => handleTouchStart(e, product)}
-                    onTouchMove={(e) => handleTouchMove(e)}
-                    onTouchEnd={(e) => handleTouchEnd(e, product)}
                 >
                     <Product
                         key={product.id}
