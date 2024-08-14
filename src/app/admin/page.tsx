@@ -87,16 +87,19 @@ export default function AdminDashboard() {
     }
 
     function handleTouchStart(e: React.TouchEvent<HTMLDivElement>, product: ProductInterface) {
+        e.preventDefault();
         const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
         dragStartHandler(dragEvent, product);
     }
 
     function handleTouchMove(e: React.TouchEvent<HTMLDivElement>) {
+        e.preventDefault();
         const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
         dragOverHandler(dragEvent);
     }
 
     function handleTouchEnd(e: React.TouchEvent<HTMLDivElement>, product: ProductInterface) {
+        e.preventDefault();
         const dragEvent = e as unknown as React.DragEvent<HTMLDivElement>;
         dropHandler(dragEvent, product);
     }
